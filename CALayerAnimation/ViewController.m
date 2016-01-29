@@ -83,7 +83,7 @@
     
     NSDate *date = [NSDate date];
     NSString *str = [NSString stringWithFormat:@"%f",[date timeIntervalSince1970]];
-    CGFloat f = 02154127;
+    CGFloat f = [date timeIntervalSince1970];
     NSDate *dateN = [NSDate dateWithTimeIntervalSince1970:f];
     NSLog(@"%@---time =%@",str,dateN);
 
