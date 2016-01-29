@@ -9,10 +9,18 @@
 #import "ViewController.h"
 #import <QuartzCore/QuartzCore.h>
 @interface ViewController ()
-
+@property (nonatomic)NSInteger count;
+@property (nonatomic,strong)UILabel *label;
+@property (nonatomic,strong)UIButton *btn;
 @end
 
 @implementation ViewController
+- (UIButton *)btn {
+    if (!_btn) {
+        self.btn = [[UIButton alloc]initWithFrame:CGRectMake(100, 300, 100, 50)];
+    }
+    return _btn;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
@@ -87,13 +95,45 @@
     NSDate *dateN = [NSDate dateWithTimeIntervalSince1970:f];
     NSLog(@"%@---time =%@",str,dateN);
 
-    [UIView animateWithDuration:0.5 animations:^{
-        
-        
-    }];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(50, 50, 100, 100)];
+    label.text = @"Animation";
+    label.textAlignment = NSTextAlignmentCenter;
+    label.layer.backgroundColor = [UIColor redColor].CGColor;
+    label.layer.cornerRadius = label.bounds.size.width/2;
+    label.layer.borderWidth = 1;
+    label.layer.borderColor = [UIColor greenColor].CGColor;
+    self.label = label;
+    [self.view addSubview:self.label];
+    [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(countAdd) userInfo:nil repeats:YES];
+    
+    self.btn.layer.cornerRadius = self.btn.bounds.size.width/5;
+    self.btn.backgroundColor = [UIColor magentaColor];
+    self.btn.layer.borderWidth = 5;
+    [self.btn setTitle:@"only btn" forState:UIControlStateNormal];
+    [self.btn addTarget:self action:@selector(changeViewBackground) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.btn];
+}
+- (void)changeViewBackground {
+    if (self.btn.selected == NO) {
+        self.btn.selected = YES;
+        self.view.backgroundColor = [UIColor cyanColor];
+    }else{
+        self.btn.selected = NO;
+        self.view.backgroundColor = [UIColor whiteColor];
+    }
     
 }
-
+- (void)countAdd {
+    [UIView animateWithDuration:0.5 animations:^{
+        self.count += 10;
+        if (self.count + 50 > [UIScreen mainScreen].bounds.size.width) {
+            self.count -= 10;
+        }else if (self.count + 50 <= 0) {
+            self.count += 10;
+        }
+        self.label.frame = CGRectMake(self.count+50, self.count+50, 100, self.count);
+    }];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
