@@ -104,7 +104,7 @@
     label.layer.borderColor = [UIColor greenColor].CGColor;
     self.label = label;
     [self.view addSubview:self.label];
-    [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(countAdd) userInfo:nil repeats:YES];
+//    [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(countAdd) userInfo:nil repeats:YES];
     
     self.btn.layer.cornerRadius = self.btn.bounds.size.width/5;
     self.btn.backgroundColor = [UIColor magentaColor];
@@ -125,13 +125,7 @@
 }
 - (void)countAdd {
     [UIView animateWithDuration:0.5 animations:^{
-        self.count += 10;
-        if (self.count + 50 > [UIScreen mainScreen].bounds.size.width) {
-            self.count -= 10;
-        }else if (self.count + 50 <= 0) {
-            self.count += 10;
-        }
-        self.label.frame = CGRectMake(self.count+50, self.count+50, 100, self.count);
+        self.label.frame = CGRectMake(self.count, self.count, 100, self.count);
     }];
 }
 - (void)didReceiveMemoryWarning {
